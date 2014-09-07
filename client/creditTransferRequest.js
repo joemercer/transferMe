@@ -39,7 +39,17 @@ Template.courseEquivelencySearch.exchangeSchoolCb = function(e, s, d) {
 };
 
 Template.courseEquivelencySearch.showSearch = function() {
-  return Session.get('homeSchool') && Session.get('exchangeSchool');
+  var showSearch = Session.get('homeSchool') && Session.get('exchangeSchool');
+
+  // if (showSearch) {
+  //   $('.input-schools').slideUp();
+  // }
+
+  return showSearch;
+}
+
+Template.courseEquivelencySearch.hasResults = function() {
+  return Session.get('hasResults');
 }
 
 // Template.courseEquivelencySearch.rendered = function() {
@@ -107,7 +117,7 @@ Template.courseEquivelencySearch.results = function() {
   //   return it;
   // });
 
-  return CourseEquivelents.find({
+  var courseEquivelents = CourseEquivelents.find({
     homeSchool: homeSchool._id,
     exchangeSchool: exchangeSchool._id
   }, {
@@ -136,6 +146,10 @@ Template.courseEquivelencySearch.results = function() {
             it.exchangeSchoolCourse.description.toLowerCase().indexOf(courseQuery) > -1);
   });
 
+  Session.set('hasResults', !!courseEquivelents.length);
+
+  return courseEquivelents;
+
 
   // return CourseEquivelents.find({
   //   homeSchool: homeSchool._id,
@@ -153,6 +167,14 @@ Template.courseEquivelencySearch.events({
 
 
 
+
+Template.courseEquivelencyInput.homeSchool = function() {
+  return Session.get('homeSchool');
+};
+
+Template.courseEquivelencyInput.exchangeSchool = function() {
+  return Session.get('exchangeSchool');
+};
 
 Template.courseEquivelencyInput.events({
   'click .add-course-equivelency': function(e, Template) {

@@ -10,16 +10,10 @@
 	<div class="container">
 		<h3>TransferMe</h3>
 		<small>For exchange students to see what credits will transfer between universities.</small>
-		<br><br><br>
+		<br>
 
 		{{> courseEquivelencySearch}}
 	</div>
-
-
-
-  <br><br><br><br>
-
-  {{> courseEquivelencyInput}}
 
 </template>
 
@@ -28,7 +22,8 @@
 </template> -->
 
 <template name="courseEquivelencySearch">
-	<form class="form-horizontal" role="form">
+	<form class="form-horizontal input-schools" role="form">
+		<br><br>
 
 		<div class="col-md-6">
 			<div class="form-group">
@@ -62,9 +57,20 @@
 			</div>
 		</div>
 
-		<br>
-
 		<div class="col-md-12">
+
+			{{#if hasResults}}
+				<br>
+			{{else}}
+
+				<h4>Didn't find what you're looking for?</h4>
+				<div class="well">
+					<h4>Request approval for a new transfer credit:</h4>
+					{{> courseEquivelencyInput}}
+				</div>
+
+			{{/if}}
+
 			<ul class="list-group">
 			{{#each results}}
 				<li class="list-group-item {{#if pending}}list-group-item-warning{{else}}{{#if approved}}list-group-item-success{{else}}list-group-item-danger{{/if}}{{/if}}">
@@ -81,6 +87,7 @@
 				</li>
 			{{/each}}
 			</ul>
+
 		</div>
 
 	{{/if}}
@@ -89,28 +96,79 @@
 
 
 
-
-
-
-
 <template name="courseEquivelencyInput">
-	<div class="form-group">
-		Home school: <input class="form-control input-home-school-name" type="text" value="UWaterloo" />
+	<form class="form-horizontal input-schools" role="form">
 
-		course code: <input class="form-control input-home-school-course-code" type="text" value="CS 245" />
+		<div class="row">
+			<div class="form-group col-md-6">
 
-		description: <input class="form-control input-home-school-course-description" type="text" value="Blah blah blah" />
-	</div>
+				<div class="row">
+					<label for="homeSchool" class="col-sm-4 control-label">Home school:</label>
+					<div class="col-sm-8">
+						<input class="form-control input-home-school-name" name="homeSchool" type="text" value="{{homeSchool.name}}" />
+					</div>
+				</div>
 
-	<div class="form-group">
-		Exchange school: <input class="form-control input-exchange-school-name" type="text" value="HKUST" />
+				<div class="row">
+					<label for="homeSchoolCourseCode" class="col-sm-4 control-label">Course code:</label>
+					<div class="col-sm-8">
+						<input class="form-control input-home-school-course-code" name="homeSchoolCourseCode" type="text" value="CS 245" />
+					</div>
+				</div>
 
-		course code: <input class="form-control input-exchange-school-course-code" type="text" value="COMP 245" />
+				<div class="row">
+					<label for="homeSchoolCourseDescription" class="col-sm-4 control-label">Course description:</label>
+					<div class="col-sm-8">
+						<textarea class="form-control input-home-school-course-description" name="homeSchoolCourseDescription" rows="3" value="Blah blah blah"></textarea>
+					</div>
+				</div>
 
-		description: <input class="form-control input-exchange-school-course-description" type="text" value="Blah blah blah" />
-	</div>
+			</div>
 
-	<button class="btn btn-default add-course-equivelency">Request Course Transfer Credit</button>
+			<div class="form-group col-md-6">
+				
+				<div class="row">
+					<label for="exchangeSchool" class="col-sm-4 control-label">Exchange school:</label>
+					<div class="col-sm-8">
+						<input class="form-control input-exchange-school-name" name="exchangeSchool" type="text" value="{{exchangeSchool.name}}" />
+					</div>
+				</div>
+
+				<div class="row">
+					<label for="exchangeSchoolCourseCode" class="col-sm-4 control-label">Course code:</label>
+					<div class="col-sm-8">
+						<input class="form-control input-exchange-school-course-code" name="exchangeSchoolCourseCode" type="text" value="COMP 245" />
+					</div>
+				</div>
+
+				<div class="row">
+					<label for="exchangeSchoolCourseDescription" class="col-sm-4 control-label">Course description:</label>
+					<div class="col-sm-8">
+						<textarea class="form-control input-exchange-school-course-description" name="exchangeSchoolCourseDescription" rows="3" value="Blah blah blah"></textarea>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="form-group col-md-12">
+
+				<div class="row">
+					<label for="schoolEmail" class="col-sm-2 control-label">School email:</label>
+					<div class="col-sm-7">
+						<input class="form-control input-school-email" name="schoolEmail" type="text" value="you@school.com" />
+					</div>
+
+					<div class="col-sm-3">
+						<button class="btn btn-default add-course-equivelency">Submit</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</form>
 </template>
 
 
@@ -119,7 +177,7 @@
 
 
 
-
+<!-- 
 <template name="courseView">
 	<h3>{{name}} at {{school}}</h3>
 	<p>{{description}}</p>
@@ -133,4 +191,4 @@
 	{{> courseView}}
 	B:
 	{{> courseView}}
-</template>
+</template> -->
