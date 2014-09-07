@@ -12,44 +12,79 @@
   <h2>Search for transfer credits</h2>
   {{> courseEquivelencySearch}}
 
-  <input type="button" value="Click" />
+  <br><br><br><br>
+
+  {{> courseEquivelencyInput}}
+
 </template>
 
-<template name="schoolSearch">
-	<input class="form-control typeahead" name="school" type="text" placeholder="name of school" autocomplete="off" spellcheck="off" data-source="schools" />
-</template>
-
-<template name="courseSearch">
-	{{> schoolSearch}}
-	<input type="text" value="MATH 239" />
-</template>
+<!-- <template name="schoolSearch">
+	<input class="form-control typeahead" name="school" type="text" placeholder="name of school" autocomplete="off" spellcheck="off" data-source="schools" data-selected="school" />
+</template> -->
 
 <template name="courseEquivelencySearch">
 	<div class="form-group">
-		A:
-		{{> courseSearch}}
-		B:
-		{{> courseSearch}}
+		<label for="homeSchool">Home school:</label>
+		<input class="form-control typeahead" name="homeSchool" type="text" placeholder="University of Waterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchool" />
+
+		<label for="exchangeSchool">Exchange school:</label>
+		<input class="form-control typeahead" name="exchangeSchool" type="text" placeholder="Hong Kong University of Science and Technology" autocomplete="off" spellcheck="off" data-source="schools" data-selected="exchangeSchool" />
+	</div>
+
+	<div class="form-group">
+		<label for="courseSearch">Search for courses:</label>
+		<input class="form-control" name="courseSearch" type="text" placeholder="MATH 239" />
+	</div>
+
+	<div>
+		{{#each results}}
+			<p>hello</p>
+		{{/each}}
+
+		<input class="addNew" type="button" value="add" />
 	</div>
 </template>
 
-<template name="courseInput">
-	<input type="text" />
-	<input type="text" value="MATH 239" />
-	<input type="text" value="Course description..." />
+
+
+
+
+
+
+<template name="courseEquivelencyInput">
+	<div class="form-group">
+		Home school: <input class="form-control input-home-school-name" type="text" value="UWaterloo" />
+
+		course code: <input class="form-control input-home-school-course-code" type="text" value="CS 245" />
+
+		description: <input class="form-control input-home-school-course-description" type="text" value="Blah blah blah" />
+	</div>
+
+	<div class="form-group">
+		Exchange school: <input class="form-control input-exchange-school-name" type="text" value="HKUST" />
+
+		course code: <input class="form-control input-exchange-school-course-code" type="text" value="COMP 245" />
+
+		description: <input class="form-control input-exchange-school-course-description" type="text" value="Blah blah blah" />
+	</div>
+
+	<button class="btn btn-default add-course-equivelency">Request Course Transfer Credit</button>
 </template>
+
+
+
+
+
+
+
 
 <template name="courseView">
 	<h3>{{name}} at {{school}}</h3>
 	<p>{{description}}</p>
 </template>
 
-<template name="courseEquivelencyInput">
-	A:
-	{{> courseInput}}
-	B:
-	{{> courseInput}}
-</template>
+
+
 
 <template name="courseEquivelencyView">
 	A:
