@@ -38,6 +38,10 @@ Template.courseEquivelencySearch.exchangeSchoolCb = function(e, s, d) {
   Session.set('exchangeSchool', school);
 };
 
+Template.courseEquivelencySearch.showSearch = function() {
+  return Session.get('homeSchool') && Session.get('exchangeSchool');
+}
+
 // Template.courseEquivelencySearch.rendered = function() {
 //   // set the starting session variables
 //   // !!! probably don't want to do this in the actual app
