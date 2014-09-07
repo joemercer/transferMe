@@ -33,12 +33,12 @@
 
 	<div class="form-group">
 		<label for="courseSearch">Search for courses:</label>
-		<input class="form-control" name="courseSearch" type="text" placeholder="MATH 239" />
+		<input class="form-control input-course-query" name="courseSearch" type="text" placeholder="MATH 239" />
 	</div>
 
 	<div>
 		{{#each results}}
-			<p>hello</p>
+			<p>{{name}} - {{description}}</p>
 		{{/each}}
 	</div>
 </template>

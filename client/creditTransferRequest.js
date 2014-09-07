@@ -44,18 +44,34 @@ Template.courseEquivelencySearch.results = function() {
   var homeSchool = Session.get('homeSchool');
   var exchangeSchool = Session.get('exchangeSchool');
 
-  if (!homeSchool || !exchangeSchool) {
-    return [];
-  }
+  // if (!homeSchool || !exchangeSchool) {
+  //   return [];
+  // }
 
-  return CourseEquivelents.find({
-    homeSchool: homeSchool._id,
-    exchangeSchool: exchangeSchool._id
+  var courseQuery = Session.get('courseQuery');
+  return Courses.find().fetch().filter(function(it){
+    return it.name.toLowerCase().indexOf(courseQuery) > -1 ||
+           it.description.toLowerCase().indexOf(courseQuery) > -1;
   });
+  // return Courses.find({
+  //   $or: [
+  //     { $text: { name: courseQuery } },
+  //     { $text: { description: courseQuery } },
+  //   ]
+  // });
+
+  // return CourseEquivelents.find({
+  //   homeSchool: homeSchool._id,
+  //   exchangeSchool: exchangeSchool._id
+  // });
 };
 
+Session.set('courseQuery', '');
 Template.courseEquivelencySearch.events({
-
+  'keyup .input-course-query': function (e) {
+    var courseQuery = $('.input-course-query').val().toLowerCase();
+    Session.set('courseQuery', courseQuery);
+  }
 });
 
 
