@@ -57,15 +57,15 @@ Meteor.startup(function() {
       exchangeSchool: h,
       exchangeSchoolCourse: h1,
       pending: false,
-      accepted: true
+      approved: true
     });
     CourseEquivelents.insert({
       homeSchool: u,
       homeSchoolCourse: u1,
       exchangeSchool: h,
       exchangeSchoolCourse: h2,
-      pending: true,
-      accepted: false
+      pending: false,
+      approved: false
     });
 
   }

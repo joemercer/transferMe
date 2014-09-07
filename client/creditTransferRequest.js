@@ -106,6 +106,11 @@ Template.courseEquivelencySearch.results = function() {
   return CourseEquivelents.find({
     homeSchool: homeSchool._id,
     exchangeSchool: exchangeSchool._id
+  }, {
+    $sort: {
+      pending: -1,
+      accepted: 1
+    }
   }).fetch().map(function(it){
     it.homeSchool = homeSchool;
     it.homeSchoolCourse = Courses.findOne({
@@ -241,7 +246,7 @@ Template.courseEquivelencyInput.events({
         exchangeSchool: exchangeSchool,
         exchangeSchoolCourse: exchangeSchoolCourse,
         pending: true,
-        accepted: false
+        approved: false
       });
     }
     else {

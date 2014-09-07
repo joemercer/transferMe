@@ -37,10 +37,22 @@
 	</div>
 
 	<div>
+		<ul class="list-group">
 		{{#each results}}
-			<p>{{name}}</p>
-			<p>{{homeSchoolCourse.name}} -> {{exchangeSchoolCourse.name}}</p>
+			<li class="list-group-item {{#if pending}}list-group-item-warning{{else}}{{#if approved}}list-group-item-success{{else}}list-group-item-danger{{/if}}{{/if}}">
+				{{#if pending}}
+					<span class="badge">pending</span>
+				{{else}}
+					{{#if approved}}
+						<span class="badge">approved</span>
+					{{else}}
+						<span class="badge">not approved</span>
+					{{/if}}
+				{{/if}}
+				<h4>{{exchangeSchoolCourse.name}} at {{exchangeSchool.name}} ~ {{homeSchoolCourse.name}} at {{homeSchool.name}}</h4>
+			</li>
 		{{/each}}
+		</ul>
 	</div>
 </template>
 
