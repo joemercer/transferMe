@@ -25,10 +25,10 @@
 <template name="courseEquivelencySearch">
 	<div class="form-group">
 		<label for="homeSchool">Home school:</label>
-		<input class="form-control typeahead" name="homeSchool" type="text" placeholder="University of Waterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchool" />
+		<input class="form-control typeahead" name="homeSchool" type="text" value="UWaterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchoolCb" />
 
 		<label for="exchangeSchool">Exchange school:</label>
-		<input class="form-control typeahead" name="exchangeSchool" type="text" placeholder="Hong Kong University of Science and Technology" autocomplete="off" spellcheck="off" data-source="schools" data-selected="exchangeSchool" />
+		<input class="form-control typeahead" name="exchangeSchool" type="text" placeholder="HKUST" autocomplete="off" spellcheck="off" data-source="schools" data-selected="exchangeSchoolCb" />
 	</div>
 
 	<div class="form-group">
@@ -40,8 +40,6 @@
 		{{#each results}}
 			<p>hello</p>
 		{{/each}}
-
-		<input class="addNew" type="button" value="add" />
 	</div>
 </template>
 

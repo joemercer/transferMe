@@ -16,36 +16,41 @@ Template.courseEquivelencySearch.schools = function() {
 //   // }
 // });
 
-Template.courseEquivelencySearch.homeSchool = function(e, s, d) {
-  if (!s) {
-    return;
-  }
+Template.courseEquivelencySearch.homeSchoolCb = function(e, s, d) {
   var school = Schools.findOne({
     name: s.value
   });
-  debugger;
-  console.log(school);
-  return s.value;
+  if (!school) {
+    Session.set('homeSchool', null);
+    return;
+  }
+  Session.set('homeSchool', school);
 };
 
-Template.courseEquivelencySearch.exchangeSchool = function(e, s, d) {
-  if (!s) {
-    return;
-  }
+Template.courseEquivelencySearch.exchangeSchoolCb = function(e, s, d) {
   var school = Schools.findOne({
     name: s.value
   });
-  console.log(school);
-  return s.value;
+  if (!school) {
+    Session.set('exchangeSchool', null);
+    return;
+  }
+  Session.set('exchangeSchool', school);
 };
 
 Template.courseEquivelencySearch.results = function() {
   // debugger;
   // this.data;
+  var homeSchool = Session.get('homeSchool');
+  var exchangeSchool = Session.get('exchangeSchool');
+
+  if (!homeSchool || !exchangeSchool) {
+    return [];
+  }
 
   return CourseEquivelents.find({
-    // homeSchool: ,
-    // exchangeSchool: 
+    homeSchool: homeSchool._id,
+    exchangeSchool: exchangeSchool._id
   });
 };
 
@@ -174,8 +179,13 @@ Meteor.startup(function(){
   // initializes all typeahead instances
   Meteor.typeahead.inject();
 
-  // $('.typeahead').on('typeahead:selected', function (obj, datum) {
-  //     console.log(obj);
-  //     console.log(datum);
-  // });
+  // set the starting session variables
+  Session.set('homeSchool', Schools.findOne({
+    name: 'UWaterloo'
+  }));
+  Session.set('exchangeSchool', Schools.findOne({
+    name: 'HKUST'
+  }));
+
+
 });

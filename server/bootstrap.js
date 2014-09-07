@@ -37,6 +37,19 @@ Meteor.startup(function() {
       description: 'CO2500 desc'
 		});
 
+		Schools.update({_id: u}, {
+      $push: { courses: u1 }
+    });
+    Schools.update({_id: u}, {
+      $push: { courses: u2 }
+    });
+    Schools.update({_id: h}, {
+      $push: { courses: h1 }
+    });
+    Schools.update({_id: h}, {
+      $push: { courses: h2 }
+    });
+
 		// course equivelents
 		CourseEquivelents.insert({
       homeSchool: u,
