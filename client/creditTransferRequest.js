@@ -62,6 +62,9 @@ Template.courseEquivelencySearch.results = function() {
     exchangeSchool = Schools.findOne({
       name: 'HKUST'
     });
+    if (!homeSchool || !exchangeSchool) {
+      return [];
+    }
     // return [];
   }
 
