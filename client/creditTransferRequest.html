@@ -1,0 +1,59 @@
+<head>
+  <title>creditTransferRequest</title>
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+  <h1>UWaterloo Math Transfer Credits</h1>
+
+  <h2>Search for transfer credits</h2>
+  {{> courseEquivelencySearch}}
+
+  <input type="button" value="Click" />
+</template>
+
+<template name="schoolSearch">
+	<input class="form-control typeahead" name="school" type="text" placeholder="name of school" autocomplete="off" spellcheck="off" data-source="schools" />
+</template>
+
+<template name="courseSearch">
+	{{> schoolSearch}}
+	<input type="text" value="MATH 239" />
+</template>
+
+<template name="courseEquivelencySearch">
+	<div class="form-group">
+		A:
+		{{> courseSearch}}
+		B:
+		{{> courseSearch}}
+	</div>
+</template>
+
+<template name="courseInput">
+	<input type="text" />
+	<input type="text" value="MATH 239" />
+	<input type="text" value="Course description..." />
+</template>
+
+<template name="courseView">
+	<h3>{{name}} at {{school}}</h3>
+	<p>{{description}}</p>
+</template>
+
+<template name="courseEquivelencyInput">
+	A:
+	{{> courseInput}}
+	B:
+	{{> courseInput}}
+</template>
+
+<template name="courseEquivelencyView">
+	A:
+	{{> courseView}}
+	B:
+	{{> courseView}}
+</template>
