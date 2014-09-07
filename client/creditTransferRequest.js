@@ -38,15 +38,26 @@ Template.courseEquivelencySearch.exchangeSchoolCb = function(e, s, d) {
   Session.set('exchangeSchool', school);
 };
 
+Template.courseEquivelencySearch.rendered = function() {
+  // set the starting session variables
+  // !!! probably don't want to do this in the actual app
+  Session.set('homeSchool', Schools.findOne({
+    name: 'UWaterloo'
+  }));
+  Session.set('exchangeSchool', Schools.findOne({
+    name: 'HKUST'
+  }));
+};
+
 Template.courseEquivelencySearch.results = function() {
   // debugger;
   // this.data;
   var homeSchool = Session.get('homeSchool');
   var exchangeSchool = Session.get('exchangeSchool');
 
-  // if (!homeSchool || !exchangeSchool) {
-  //   return [];
-  // }
+  if (!homeSchool || !exchangeSchool) {
+    return [];
+  }
 
   var courseQuery = Session.get('courseQuery');
   return Courses.find().fetch().filter(function(it){
@@ -194,14 +205,6 @@ Template.courseEquivelencyInput.events({
 Meteor.startup(function(){
   // initializes all typeahead instances
   Meteor.typeahead.inject();
-
-  // set the starting session variables
-  Session.set('homeSchool', Schools.findOne({
-    name: 'UWaterloo'
-  }));
-  Session.set('exchangeSchool', Schools.findOne({
-    name: 'HKUST'
-  }));
 
 
 });
