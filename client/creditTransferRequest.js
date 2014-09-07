@@ -38,16 +38,16 @@ Template.courseEquivelencySearch.exchangeSchoolCb = function(e, s, d) {
   Session.set('exchangeSchool', school);
 };
 
-Template.courseEquivelencySearch.rendered = function() {
-  // set the starting session variables
-  // !!! probably don't want to do this in the actual app
-  Session.set('homeSchool', Schools.findOne({
-    name: 'UWaterloo'
-  }));
-  Session.set('exchangeSchool', Schools.findOne({
-    name: 'HKUST'
-  }));
-};
+// Template.courseEquivelencySearch.rendered = function() {
+//   // set the starting session variables
+//   // !!! probably don't want to do this in the actual app
+//   Session.set('homeSchool', Schools.findOne({
+//     name: 'UWaterloo'
+//   }));
+//   Session.set('exchangeSchool', Schools.findOne({
+//     name: 'HKUST'
+//   }));
+// };
 
 Template.courseEquivelencySearch.results = function() {
   // debugger;
@@ -56,20 +56,74 @@ Template.courseEquivelencySearch.results = function() {
   var exchangeSchool = Session.get('exchangeSchool');
 
   if (!homeSchool || !exchangeSchool) {
-    return [];
+    homeSchool = Schools.findOne({
+      name: 'UWaterloo'
+    });
+    exchangeSchool = Schools.findOne({
+      name: 'HKUST'
+    });
+    // return [];
   }
 
   var courseQuery = Session.get('courseQuery');
-  return Courses.find().fetch().filter(function(it){
-    return it.name.toLowerCase().indexOf(courseQuery) > -1 ||
-           it.description.toLowerCase().indexOf(courseQuery) > -1;
-  });
-  // return Courses.find({
-  //   $or: [
-  //     { $text: { name: courseQuery } },
-  //     { $text: { description: courseQuery } },
-  //   ]
+  
+  // var courses = Courses.find().fetch().filter(function(it){
+  //   // course belongs to one of the selected schools
+  //   // and matches the search query entered
+  //   return (homeSchool.courses.indexOf(it._id) > -1 || 
+  //           exchangeSchool.courses.indexOf(it._id) > -1) &&
+  //          (it.name.toLowerCase().indexOf(courseQuery) > -1 ||
+  //           it.description.toLowerCase().indexOf(courseQuery) > -1);
+
+  // }).map(function(it){
+  //   return it._id;
   // });
+
+  // return courses;
+
+  // return CourseEquivelents.find({
+  //   homeSchool: homeSchool._id,
+  //   exchangeSchool: exchangeSchool._id
+  // }).fetch().filter(function(it){
+  //   // either home school course or exchance school course matches the query
+  //   return courses.indexOf(it.homeSchoolCourse) > -1 ||
+  //          courses.indexOf(it.exchangeSchoolCourse > -1);
+  // }).map(function(it){
+  //   it.homeSchool = homeSchool;
+  //   it.homeSchoolCourse = Courses.findOne({
+  //     _id: it.homeSchoolCourse
+  //   });
+  //   it.exchangeSchool = exchangeSchool;
+  //   it.exchangeSchoolCourse = Courses.findOne({
+  //     _id: it.exchangeSchoolCourse
+  //   });
+  //   return it;
+  // });
+
+  return CourseEquivelents.find({
+    homeSchool: homeSchool._id,
+    exchangeSchool: exchangeSchool._id
+  }).fetch().map(function(it){
+    it.homeSchool = homeSchool;
+    it.homeSchoolCourse = Courses.findOne({
+      _id: it.homeSchoolCourse
+    });
+    it.exchangeSchool = exchangeSchool;
+    it.exchangeSchoolCourse = Courses.findOne({
+      _id: it.exchangeSchoolCourse
+    });
+    return it;
+  }).filter(function(it){
+    // course belongs to one of the selected schools
+    // and matches the search query entered
+    return (it.homeSchool.courses.indexOf(it.homeSchoolCourse._id) > -1 || 
+            it.exchangeSchool.courses.indexOf(it.exchangeSchoolCourse._id) > -1) &&
+           (it.homeSchoolCourse.name.toLowerCase().indexOf(courseQuery) > -1 ||
+            it.homeSchoolCourse.description.toLowerCase().indexOf(courseQuery) > -1 ||
+            it.exchangeSchoolCourse.name.toLowerCase().indexOf(courseQuery) > -1 ||
+            it.exchangeSchoolCourse.description.toLowerCase().indexOf(courseQuery) > -1);
+  });
+
 
   // return CourseEquivelents.find({
   //   homeSchool: homeSchool._id,
@@ -156,9 +210,9 @@ Template.courseEquivelencyInput.events({
     });
     if (!exchangeSchoolCourse) {
       exchangeSchoolCourse = Courses.insert({
-        school: homeSchool,
-        name: homeSchoolCourseCode,
-        description: homeSchoolCourseDescription
+        school: exchangeSchool,
+        name: exchangeSchoolCourseCode,
+        description: exchangeSchoolCourseDescription
       });
 
       // update exchangeSchool courses
