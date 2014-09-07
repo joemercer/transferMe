@@ -22,35 +22,38 @@
 </template> -->
 
 <template name="courseEquivelencySearch">
-	<form class="form-horizontal input-schools" role="form">
+
 		<br><br>
 
-		<div class="col-md-6">
-			<div class="form-group">
-				<label for="homeSchool" class="col-sm-4 control-label">Home school:</label>
-				<div class="col-sm-8">
-					<input class="form-control typeahead" name="homeSchool" type="text" value="UWaterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchoolCb" />
+		<form class="form-horizontal input-schools" role="form">
+
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="homeSchool" class="col-sm-4 control-label">Home school:</label>
+					<div class="col-sm-8">
+						<input class="form-control typeahead" name="homeSchool" type="text" value="UWaterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchoolCb" />
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="col-md-6">
-			<div class="form-group">
-				<label for="exchangeSchool" class="col-sm-4 control-label">Exchange school:</label>
-				<div class="col-sm-8">
-					<input class="form-control typeahead" name="exchangeSchool" type="text" placeholder="HKUST" autocomplete="off" spellcheck="off" data-source="schools" data-selected="exchangeSchoolCb" />
+			<div class="col-md-6">
+				<div class="form-group">
+					<label for="exchangeSchool" class="col-sm-4 control-label">Exchange school:</label>
+					<div class="col-sm-8">
+						<input class="form-control typeahead" name="exchangeSchool" type="text" placeholder="HKUST" autocomplete="off" spellcheck="off" data-source="schools" data-selected="exchangeSchoolCb" />
+					</div>
 				</div>
 			</div>
-		</div>
 
-	</form>
+		</form>
 
-	<br>
+	{{#if notHasSchoolsSelected}}
+	{{else}}
+		<hr>
+		<br>
 
-	{{#if showSearch}}
-
-		<div class="col-md-12">	
-			<div class="form-group">
+		<div class="row">	
+			<div class="form-group col-md-12">
 				<label class="control-label" for="courseSearch">Search for courses using course codes, course names, or descriptions:</label>
 				<br>
 				<input class="form-control input-course-query" name="courseSearch" type="text" placeholder="e.g. MATH 239, Combinatorics, or Enumeration" />

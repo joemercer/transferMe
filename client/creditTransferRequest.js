@@ -38,14 +38,14 @@ Template.courseEquivelencySearch.exchangeSchoolCb = function(e, s, d) {
   Session.set('exchangeSchool', school);
 };
 
-Template.courseEquivelencySearch.showSearch = function() {
-  var showSearch = Session.get('homeSchool') && Session.get('exchangeSchool');
+Template.courseEquivelencySearch.notHasSchoolsSelected = function() {
+  var hasSchoolsSelected = Session.get('homeSchool') && Session.get('exchangeSchool');
 
   // if (showSearch) {
   //   $('.input-schools').slideUp();
   // }
 
-  return showSearch;
+  return !hasSchoolsSelected;
 }
 
 Template.courseEquivelencySearch.hasResults = function() {
@@ -70,16 +70,16 @@ Template.courseEquivelencySearch.results = function() {
   var exchangeSchool = Session.get('exchangeSchool');
 
   if (!homeSchool || !exchangeSchool) {
-    homeSchool = Schools.findOne({
-      name: 'UWaterloo'
-    });
-    exchangeSchool = Schools.findOne({
-      name: 'HKUST'
-    });
-    if (!homeSchool || !exchangeSchool) {
-      return [];
-    }
-    // return [];
+    // homeSchool = Schools.findOne({
+    //   name: 'UWaterloo'
+    // });
+    // exchangeSchool = Schools.findOne({
+    //   name: 'HKUST'
+    // });
+    // if (!homeSchool || !exchangeSchool) {
+    //   return [];
+    // }
+    return [];
   }
 
   var courseQuery = Session.get('courseQuery');
