@@ -173,10 +173,11 @@ Template.courseEquivelencySearch.results = function() {
     homeSchool: homeSchool._id,
     exchangeSchool: exchangeSchool._id
   }, {
-    sort: {
-      accepted: -1,
-      pending: 1
-    }
+    // sort: {
+    //   accepted: 1,
+    //   pending: 1
+    // },
+    limit: 15
   }).fetch().map(function(it){
     it.homeSchool = homeSchool;
     it.homeSchoolCourse = Courses.findOne({
