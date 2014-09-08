@@ -1,19 +1,16 @@
-if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to creditTransferRequest.";
-  };
+Meteor.methods({
+  sendEmail: function (to, from, subject, text) {
+    check([to, from, subject, text], [String]);
 
-  Template.hello.events({
-    'click input': function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
-}
+    // Let other method calls from the same client start running,
+    // without waiting for the email sending to complete.
+    this.unblock();
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+    Email.send({
+      to: to,
+      from: from,
+      subject: subject,
+      html: text
+    });
+  }
+});

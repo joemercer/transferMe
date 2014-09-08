@@ -254,6 +254,8 @@ Template.courseEquivelencyInput.events({
     var exchangeSchoolCourseCode = $('.input-exchange-school-course-code').val();
     var exchangeSchoolCourseDescription = $('.input-exchange-school-course-description').val();
 
+    var email = $('.input-school-email').val();
+
     // validate home school
     var homeSchool = Schools.findOne({
       name: homeSchoolName
@@ -340,6 +342,17 @@ Template.courseEquivelencyInput.events({
         pending: true,
         approved: false
       });
+
+      var acceptUrl = 'transferme.meteor.com/accepted/'+courseEquivelent;
+      var rejectUrl = 'transferme.meteor.com/rejected/'+courseEquivelent;
+
+      var message = email+' is requesting that '+exchangeSchoolCourseCode+' at '+exchangeSchoolName+' get credit for '+homeSchoolCourseCode+' at '+homeSchoolName+'. <br><br>'+exchangeSchoolCourseCode+': '+exchangeSchoolCourseDescription+'<br>'+homeSchoolCourseCode+': '+homeSchoolCourseDescription+'<br><br>To accept, go to: '+acceptUrl+'. To reject, go to: '+rejectUrl+'.<br><br>Thanks! <br><br>The team at TransferMe';
+
+      Meteor.call('sendEmail',
+            'trytassos@gmail.com',
+            'no-reply@transferme.com',
+            'Transfer Credit Request from TransferMe',
+            message);
     }
     else {
       courseEquivelent = courseEquivelent._id;
