@@ -121,9 +121,9 @@ Template.courseEquivelencySearch.results = function() {
     homeSchool: homeSchool._id,
     exchangeSchool: exchangeSchool._id
   }, {
-    $sort: {
-      pending: -1,
-      accepted: 1
+    sort: {
+      accepted: -1,
+      pending: 1
     }
   }).fetch().map(function(it){
     it.homeSchool = homeSchool;
