@@ -13,6 +13,7 @@
 		<br>
 
 		{{> courseEquivelencySearch}}
+
 	</div>
 
 </template>
@@ -86,7 +87,7 @@
 
 			<ul class="list-group">
 			{{#each results}}
-				<li class="list-group-item {{#if pending}}list-group-item-warning{{else}}{{#if approved}}list-group-item-success{{else}}list-group-item-danger{{/if}}{{/if}}">
+				<li class="list-group-item closed {{#if pending}}list-group-item-warning{{else}}{{#if approved}}list-group-item-success{{else}}list-group-item-danger{{/if}}{{/if}}">
 					{{#if pending}}
 						<span class="badge">pending</span>
 					{{else}}
@@ -96,7 +97,15 @@
 							<span class="badge">not approved</span>
 						{{/if}}
 					{{/if}}
-					<h4>{{exchangeSchoolCourse.name}} at {{exchangeSchool.name}} ~ {{homeSchoolCourse.name}} at {{homeSchool.name}}</h4>
+					<h4>{{exchangeSchoolCourse.name}} and {{homeSchoolCourse.name}}</h4>
+					<div class="row description">
+						<div class="col-sm-6">
+							<p>{{exchangeSchoolCourse.description}}</p>
+						</div>
+						<div class="col-sm-6">
+							<p>{{homeSchoolCourse.description}}</p>
+						</div>
+					</div>
 				</li>
 			{{/each}}
 			</ul>

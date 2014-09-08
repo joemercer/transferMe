@@ -165,9 +165,12 @@ Template.courseEquivelencySearch.results = function() {
 
 Session.set('courseQuery', '');
 Template.courseEquivelencySearch.events({
-  'keyup .input-course-query': function (e) {
+  'keyup .input-course-query': function(e) {
     var courseQuery = $('.input-course-query').val().toLowerCase();
     Session.set('courseQuery', courseQuery);
+  },
+  'click .list-group-item': function(e) {
+    $(e.target).closest('.list-group-item').toggleClass('closed');
   }
 });
 
