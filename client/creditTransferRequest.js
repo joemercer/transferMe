@@ -1,3 +1,55 @@
+Router.map(function () {
+  this.route('main', {
+    path: '/', // match the root path
+    template: 'main'
+  });
+
+  this.route('acceptedCourseEquivelency', {
+    path: '/accepted/:id', // match the root path
+    template: 'acceptedCourseEquivelency',
+    action: function () {
+      var worked = CourseEquivelents.findOne({
+        _id: this.params.id
+      });
+
+      if (worked) {
+        worked.pending = false;
+        worked.approved = true;
+
+        CourseEquivelents.update({
+          _id: worked._id
+        }, worked);
+
+        this.render();
+      }
+    },
+  });
+
+  this.route('rejectedCourseEquivelency', {
+    path: '/rejected/:id', // match the root path
+    template: 'rejectedCourseEquivelency',
+    action: function () {
+      var worked = CourseEquivelents.findOne({
+        _id: this.params.id
+      });
+
+      if (worked) {
+        worked.pending = false;
+        worked.approved = false;
+
+        CourseEquivelents.update({
+          _id: worked._id
+        }, worked);
+
+        this.render();
+      }
+    },
+  });
+});
+
+Template.main.rendered = function() {
+  Meteor.typeahead.inject();
+};
 
 
 Template.courseEquivelencySearch.schools = function() {
@@ -308,7 +360,7 @@ Template.courseEquivelencyInput.events({
 
 Meteor.startup(function(){
   // initializes all typeahead instances
-  Meteor.typeahead.inject();
+  // Meteor.typeahead.inject();
 
 
 });
