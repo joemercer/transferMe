@@ -31,7 +31,7 @@
 				<div class="form-group">
 					<label for="homeSchool" class="col-sm-4 control-label">Home school:</label>
 					<div class="col-sm-8">
-						<input class="form-control typeahead" name="homeSchool" type="text" value="UWaterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchoolCb" />
+						<input class="form-control typeahead" name="homeSchool" type="text" placeholder="UWaterloo" autocomplete="off" spellcheck="off" data-source="schools" data-selected="homeSchoolCb" />
 					</div>
 				</div>
 			</div>
@@ -66,12 +66,21 @@
 				<br>
 			{{else}}
 
-				<h4>Didn't find what you're looking for?</h4>
-				<div class="well">
-					<h4>Request approval for a new transfer credit:</h4>
-					<br>
-					{{> courseEquivelencyInput}}
-				</div>
+				{{#if justRequestedApproval}}
+					<div class="well">
+						<h4>Thanks for submitting your request!</h4>
+						<p>We've just sent an email to your school counselor from {{email}} with a link they can click to record their acceptance of this credit transfer. Stay tuned, we'll send you an email when they've responded.</p>
+					</div>
+				{{else}}
+					<h4>Didn't find what you're looking for?</h4>
+					<div class="well">
+						<h4>Request approval for a new transfer credit:</h4>
+						<br>
+						{{> courseEquivelencyInput}}
+					</div>
+				{{/if}}
+
+
 
 			{{/if}}
 
@@ -165,7 +174,7 @@
 					</div>
 
 					<div class="col-sm-3">
-						<button class="btn btn-default add-course-equivelency">Submit</button>
+						<input type="button" class="btn btn-default add-course-equivelency" value="Submit" />
 					</div>
 				</div>
 

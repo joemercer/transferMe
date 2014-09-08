@@ -146,7 +146,13 @@ Template.courseEquivelencySearch.results = function() {
             it.exchangeSchoolCourse.description.toLowerCase().indexOf(courseQuery) > -1);
   });
 
-  Session.set('hasResults', !!courseEquivelents.length);
+  if (courseEquivelents.length > 0) {
+    Session.set('hasResults', true);
+    Session.set('justRequestedApproval', false);
+  }
+  else {
+    Session.set('hasResults', false);
+  }
 
   return courseEquivelents;
 
@@ -164,6 +170,11 @@ Template.courseEquivelencySearch.events({
     Session.set('courseQuery', courseQuery);
   }
 });
+
+Session.set('justRequestedApproval', false);
+Template.courseEquivelencySearch.justRequestedApproval = function() {
+  return Session.get('justRequestedApproval');
+};
 
 
 
@@ -278,6 +289,8 @@ Template.courseEquivelencyInput.events({
     else {
       courseEquivelent = courseEquivelent._id;
     }
+
+    Session.set('justRequestedApproval', true);
 
   }
 });
